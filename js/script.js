@@ -89,7 +89,7 @@ function mineField() {
             if(boom == false) {
 
                 userHistory.push(userNumber);
-                console.log("You're ok! Still no mine has exploded...for the moment.")
+                console.log("You're ok! Still no mine has exploded...yet.")
             }
             
         } else {
