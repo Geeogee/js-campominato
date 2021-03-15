@@ -81,6 +81,7 @@ function mineField() {
         var userNumber = parseInt(prompt("Insert a value from 1 to 100!"));
         var checkUserNumber = addUserNumber(userNumber, userHistory);
         if(checkUserNumber) {
+            
             console.log("OK");
             var boom = repsCheck(userNumber, gameOverNumbers);
             if(boom == false) {
@@ -100,4 +101,4 @@ function mineField() {
     console.log(userHistory);
 }
 
-mineField();
+// mineField();
