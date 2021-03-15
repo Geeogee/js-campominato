@@ -60,6 +60,7 @@ function addUserNumber(userNumber, userHistory) {
 
 // The game (you lost)
 function mineField() {
+    
     var gameOverNumbers = [ ];
     
     while (gameOverNumbers.length < 16) {
@@ -80,25 +81,21 @@ function mineField() {
         
         var userNumber = parseInt(prompt("Insert a value from 1 to 100!"));
         var checkUserNumber = addUserNumber(userNumber, userHistory);
+
         if(checkUserNumber) {
-            
-            console.log("OK");
+
             var boom = repsCheck(userNumber, gameOverNumbers);
             if(boom == false) {
 
                 userHistory.push(userNumber);
-                console.log(userHistory);
             }
             
         } else {
-            console.log("Numero già inserito!")
+            console.log("You've already inserted this number!")
         }
-
-        console.log(boom);
     }
     
     console.log("Punteggio ", userHistory.length)
-    console.log(userHistory);
 }
 
 // mineField();
