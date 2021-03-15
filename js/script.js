@@ -6,7 +6,8 @@ function generateRndNumb(min,max) {
     return rndNumber;
 }
 
-
+// Check if a values is already
+// inside a list of numbers
 function repsCheck(numberToCheck, numbers) {
 
     // Annidate cycles version
@@ -84,10 +85,11 @@ function mineField() {
 
         if(checkUserNumber) {
 
-            var boom = repsCheck(userNumber, gameOverNumbers);
+            boom = repsCheck(userNumber, gameOverNumbers);
             if(boom == false) {
 
                 userHistory.push(userNumber);
+                console.log("You're ok! Still no mine has exploded...for the moment.")
             }
             
         } else {
@@ -95,7 +97,8 @@ function mineField() {
         }
     }
     
-    console.log("Punteggio ", userHistory.length)
+    console.log("BOOOOOM!");
+    console.log("Score: ", userHistory.length)
 }
 
-// mineField();
+mineField();
