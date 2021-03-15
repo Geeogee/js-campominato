@@ -59,14 +59,29 @@ function addUserNumber(userNumber, userHistory) {
     } 
 }
 
+// Level
+function levelDifficulty(level) {
+    if (level == 0) {
+        var max = 100;
+        return max;
+    } else if (level == 1) {
+        max = 80;
+        return max;
+    } else if (level == 2) {
+        max = 60;
+        return max;
+    }
+}
+
 // The game (you lost)
 function mineField() {
     
     var gameOverNumbers = [ ];
-    
+    var level = parseInt(prompt("Choose the level difficulty. [0/1/2]"));
+    var max = levelDifficulty(level);
     while (gameOverNumbers.length < 16) {
 
-        var rndNum = generateRndNumb(1,100);
+        var rndNum = generateRndNumb(1,max);
         var repsChecked = repsCheck(rndNum, gameOverNumbers);
         if(!repsChecked) {
 
@@ -80,7 +95,7 @@ function mineField() {
     var boom = false;
     while ((userHistory.length < 84) && (boom == false)) {
         
-        var userNumber = parseInt(prompt("Insert a value from 1 to 100!"));
+        var userNumber = parseInt(prompt("Insert a value from 1 to " + max + "!"));
         var checkUserNumber = addUserNumber(userNumber, userHistory);
 
         if(checkUserNumber) {
