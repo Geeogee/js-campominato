@@ -49,16 +49,14 @@ function repsCheck(numberToCheck, numbers) {
 }
 
 // User number function 
-function addUserNumber(userHistory) {
+function addUserNumber(userNumber, userHistory) {
   
-    var userNumber = parseInt(prompt("Insert a value from 1 to 100!"));
     var checkHistory = repsCheck(userNumber,userHistory);
     if (!checkHistory) {
 
-        return userNumber;
+        return true;
     } 
 }
-
 
 // The game (you lost)
 function mineField() {
@@ -78,25 +76,24 @@ function mineField() {
 
     var userHistory = [ ];
     var boom = false;
-    while ((userHistory.length < 5) && (boom == false)) {
+    while ((userHistory.length < 84) && (boom == false)) {
         
-        var userNumber = addUserNumber(userHistory);
-        if(userNumber) {
+        var userNumber = parseInt(prompt("Insert a value from 1 to 100!"));
+        var checkUserNumber = addUserNumber(userNumber, userHistory);
+        if(checkUserNumber) {
             console.log("OK");
-            var test = repsCheck(userNumber, gameOverNumbers);
-            if(test == false) {
+            var boom = repsCheck(userNumber, gameOverNumbers);
+            if(boom == false) {
 
                 userHistory.push(userNumber);
+                console.log(userHistory);
             }
             
         } else {
-            
-            addUserNumber(userHistory);
+            console.log("Numero già inserito!")
         }
 
-        
-        boom = test;
-        console.log(test, boom);
+        console.log(boom);
     }
     
     console.log("Punteggio ", userHistory.length)
