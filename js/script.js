@@ -7,7 +7,7 @@ function generateRndNumb(min,max) {
 }
 
 
-function repsCheck(numberToCheck, gameOverNumbers) {
+function repsCheck(numberToCheck, numbers) {
 
     // Annidate cycles version
     // Check if the random number generated
@@ -35,16 +35,28 @@ function repsCheck(numberToCheck, gameOverNumbers) {
     // One Cycle version
     // Check if the number is a repetitions, and return true in that case
     var repFound = false;
-    for (var i=0; i<gameOverNumbers.length; i++) {
+    for (var i=0; i<numbers.length; i++) {
 
-        var elem = gameOverNumbers[i];
+        var elem = numbers[i];
         if(elem == numberToCheck) {
 
             repFound = true;
             break;
         }
     }
+
     return repFound;
+}
+
+// User number function 
+function addUserNumber(userHistory) {
+  
+    var userNumber = parseInt(prompt("Insert a value from 1 to 100!"));
+    var checkHistory = repsCheck(userNumber,userHistory);
+    if (!checkHistory) {
+
+        return userNumber;
+    } 
 }
 
 
@@ -64,7 +76,31 @@ function mineField() {
 
     console.log(gameOverNumbers.length, gameOverNumbers);
 
+    var userHistory = [ ];
+    var boom = false;
+    while ((userHistory.length < 5) && (boom == false)) {
+        
+        var userNumber = addUserNumber(userHistory);
+        if(userNumber) {
+            console.log("OK");
+            var test = repsCheck(userNumber, gameOverNumbers);
+            if(test == false) {
+
+                userHistory.push(userNumber);
+            }
+            
+        } else {
+            
+            addUserNumber(userHistory);
+        }
+
+        
+        boom = test;
+        console.log(test, boom);
+    }
     
+    console.log("Punteggio ", userHistory.length)
+    console.log(userHistory);
 }
 
-// mineField();
+mineField();
