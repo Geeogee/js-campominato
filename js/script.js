@@ -203,7 +203,9 @@ function generateField(mineField,max, gameOverNumbers) {
  
 }
 
-function isBoom(rows, bombIcon) {
+function isFieldBomb(rows, bombIcon, start, max, scoreField) {
+    var score = 0;
+    var winString = " ";
     for (var i=0; i<rows.length; i++) {
         for (var j=0; j<10; j++) {
             var fieldID = "row" + i + "field" + j;
@@ -212,21 +214,40 @@ function isBoom(rows, bombIcon) {
             // Check if the clicked field is a bomb
             // In that case shows an alert (STILL WORKING ON GAME STOP)
             // If is not a bomb, the field will change color
+            
             field.addEventListener("click", function() {
                 var fieldData = this.dataset.value;
                 if(fieldData == "bomb") {
+
                     this.innerHTML = bombIcon;
-                    alert("BOOM");
-                    gameOver(rows, bombIcon);
+                    this.style.backgroundColor = "#e60000";
+                    this.style.borderTop = "5px solid #ff9999";
+                    this.style.borderLeft = "5px solid #ff9999";
+                    this.style.borderRight = "5px solid #b30000";
+                    this.style.borderBottom = "5px solid #b30000";
+                    start.style.display = "inline";
+                    winString = "You lose!";
+                    gameOver(rows, bombIcon, score, winString);
                 } else {
-                    this.style.background = "blue";
+
+                    this.style.backgroundColor = "rgb(192,192,192)";
+                    this.style.border = "1px solid #818181";
+                    score++;
+                    scoreField.innerHTML = score;
+
+                    if (score == (max - 16)) {
+                        winString = "You win!";
+                        gameOver(rows, bombIcon, score, winString);
+                    }
                 }
             });
+            
         }
     }
 }
 
-function gameOver(rows, bombIcon) {
+
+function gameOver(rows, bombIcon, score, winString) {
     console.log("Inside game over");
     for (var i=0; i<rows.length; i++) {
         rows[i].style.pointerEvents = "none";
@@ -240,11 +261,16 @@ function gameOver(rows, bombIcon) {
                 field.innerHTML = bombIcon;
             } else {
 
-                field.style.background = "blue";
+                field.style.backgroundColor = "rgb(192,192,192)";
+                field.style.border = "1px solid #818181";
             }
         }
         
     }
+
+    var scoreField = document.getElementById("score");
+    scoreField.innerHTML = winString + " " + score;
+
 }
 
 
@@ -254,21 +280,32 @@ function bonus() {
     console.log(radios);
     
     var start = document.getElementById("start-game");
+    
 
     start.addEventListener("click", function() {
 
+        this.click(this.style.display = "none");
+        this.innerHTML = "Play Again";
+
         var level = levelSelected(radios);
         var max = levelDifficulty(level);
+
         var gameOverNumbers = [];
         var bombIcon = "<i class=\"fas fa-bomb\"></i>";
+        
         var mineField = document.getElementById("minefield");
+        mineField.style.border = "4px solid #333333";
         mineField.innerHTML = "";
+
+        var scoreField = document.getElementById("score");
+        scoreField.innerHTML = "";
 
         generateGameOver(gameOverNumbers, max);
 
         var rows = generateField(mineField, max, gameOverNumbers);
 
-        isBoom(rows, bombIcon);
+        isFieldBomb(rows, bombIcon, start, max, scoreField);
+
     });
 
     

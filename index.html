@@ -5,6 +5,9 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Minefield</title>
+    <!-- Google Font -->
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=VT323&display=swap" rel="stylesheet"> 
     <!-- Font awesome-->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css">
     <!-- CSS -->
@@ -12,26 +15,36 @@
 </head>
 <body>
 
-    <div class="container">
-
+    <header>
         <div id="level-difficulty">
-            <input type="radio" name="level" value="0" checked>
-            <label>Easy</label>
 
-            <input type="radio" name="level" value="1">
-            <label>Medium</label>
- 
-            <input type="radio" name="level" value="2">
-            <label>Hard</label>
-
-            <button id="start-game">Start Game</button>
-        </div>
-        <div id="minefield">
-
+            <input type="radio" id="easy" name="level" value="0" checked>
+            <label for="easy">Easy</label>
         
+            <input type="radio" id="medium" name="level" value="1">
+            <label for="medium">Medium</label>
+        
+            <input type="radio" id="hard" name="level" value="2">
+            <label for="hard">Hard</label>
             
-        </div>        
-    </div>
+        </div>
+
+        <div>
+            <button id="start-game">Start to Play</button>
+        </div>
+        
+    </header>
+
+    <main>
+        <div class="container">
+            <div id="minefield"></div>   
+            
+        </div>
+    </main>
+
+    <footer>
+        <div id="score"></div>
+    </footer>
 
     <script src="js/script.js"></script>
 </body>
