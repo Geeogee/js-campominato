@@ -8,6 +8,7 @@
     height: 100vh;
 
     display: flex;
+    flex-direction: column;
     align-items: center;
     justify-content: center;
 }
@@ -16,6 +17,7 @@
 #minefield {
     background-color: red;
 }
+
 
 .row {
     background-color: red;
@@ -28,9 +30,14 @@
 
 .field {
     border: 1px solid #000;
+    color: transparent;
     width: 40px;
     height: 40px;
 
     line-height: 40px;
     text-align: center;
+}
+
+.field[data-value="bomb"] {
+    color: #000;
 }

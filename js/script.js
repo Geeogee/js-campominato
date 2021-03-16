@@ -1,3 +1,81 @@
+// Check if a values is already
+// inside a list of numbers
+// function repsCheck(numberToCheck, numbers) {
+    
+    //     // Annidate cycles version
+    //     // Check if the random number generated
+    //     // is already inside the array
+    //     // In that case, it generates a new number that will be checked
+    //     // When the number isn't a repetitions
+    //     // The function returns the number that will be pushed inside the array
+    
+    //     // do {
+        //     //     for (var i=0; i<lng; i++) {
+            
+            //     //         var elem = gameOverNumbers[i];
+            //     //         if(numberToCheck == elem) {
+                
+                //     //             repFound = true;
+                //     //             numberToCheck = generateRndNumb(1,100);
+                //     //             break;
+                //     //         } else {
+                    
+                    //     //             repFound = false; 
+                    //     //         }
+                    //     //     }
+                    //     // } while(repFound)
+                    
+                    //     // One Cycle version
+                    //     // Check if the number is a repetitions, and return true in that case
+                    //     var repFound = false;
+                    //     for (var i=0; i<numbers.length; i++) {
+                        
+                        //         var elem = numbers[i];
+                        //         if(elem == numberToCheck) {
+                            
+                            //             repFound = true;
+                            //             break;
+                            //         }
+                            //     }
+                            
+                            //     return repFound;
+                            // }
+                            
+                            // ------------------------------------------------------------------- //
+                            
+// Level
+function levelDifficulty(level) {
+    // if (level == 0) {
+    //     var max = 100;
+    //     return max;
+    // } else if (level == 1) {
+    //     max = 80;
+    //     return max;
+    // } else if (level == 2) {
+    //     max = 60;
+    //     return max;
+    // }
+    switch(level) {
+        case 0:
+            var max = 100;
+            break;
+        case 1:
+            max = 80;
+            break;
+        case 2:
+            max = 60;
+            break;
+        default:
+            max = 100;
+            break;
+    }
+
+    return max;
+}
+
+
+
+// Genereates a random number between min and max
 function generateRndNumb(min,max) {
     var rndMin = min;
     var rndMax = max - rndMin + 1;
@@ -5,50 +83,6 @@ function generateRndNumb(min,max) {
 
     return rndNumber;
 }
-
-// Check if a values is already
-// inside a list of numbers
-// function repsCheck(numberToCheck, numbers) {
-
-//     // Annidate cycles version
-//     // Check if the random number generated
-//     // is already inside the array
-//     // In that case, it generates a new number that will be checked
-//     // When the number isn't a repetitions
-//     // The function returns the number that will be pushed inside the array
-
-//     // do {
-//     //     for (var i=0; i<lng; i++) {
-
-//     //         var elem = gameOverNumbers[i];
-//     //         if(numberToCheck == elem) {
-                
-//     //             repFound = true;
-//     //             numberToCheck = generateRndNumb(1,100);
-//     //             break;
-//     //         } else {
-
-//     //             repFound = false; 
-//     //         }
-//     //     }
-//     // } while(repFound)
-
-//     // One Cycle version
-//     // Check if the number is a repetitions, and return true in that case
-//     var repFound = false;
-//     for (var i=0; i<numbers.length; i++) {
-
-//         var elem = numbers[i];
-//         if(elem == numberToCheck) {
-
-//             repFound = true;
-//             break;
-//         }
-//     }
-
-//     return repFound;
-// }
-
 
 // Game over Numbers 
 function generateGameOver(gameOverNumbers, max) {
@@ -89,36 +123,6 @@ function playerScore(userHistory, boom, max, gameOverNumbers) {
     return userHistory.length;
 }
 
-// Level
-function levelDifficulty(level) {
-    // if (level == 0) {
-    //     var max = 100;
-    //     return max;
-    // } else if (level == 1) {
-    //     max = 80;
-    //     return max;
-    // } else if (level == 2) {
-    //     max = 60;
-    //     return max;
-    // }
-
-    switch(level) {
-        case 0:
-            var max = 100;
-            break;
-        case 1:
-            max = 80;
-            break;
-        case 2:
-            max = 60;
-            break;
-        default:
-            max = 100;
-            break;
-    }
-
-    return max;
-}
 
 // The game (you lost)
 function mineField() {
@@ -144,8 +148,112 @@ function mineField() {
     console.log("Score: ", score)
 }
 
-mineField();
+// mineField();
 
 
+// --------------------- BONUS ------------------------ //
+
+
+
+// Check the level difficulty from radios
+function levelSelected(radios) {
+    for(var i=0; i<radios.length; i++) {
+        if(radios[i].checked) {
+            var radioValue = parseInt(radios[i].value);
+            return radioValue;
+        }
+    }
+}
+
+// Generates the minefield HTML
+function generateField(mineField,max, gameOverNumbers) {
+
+
+    // Generates 10,8 or 4 rows based on level
+    for (var i=0; i<(max/10); i++) {
+        var rowValue = (i*10);
+        mineField.innerHTML += "<div class='row' data-value='" + rowValue + "'></div>";
+    }
+
+    //Collects the rows
+    var rows = document.getElementsByClassName("row");
+    for (var i=0; i<rows.length; i++) {
+
+        // Generates 10 field for N row
+        for (var j=0; j<10; j++) {
+
+            // Generates values from 1 to 100
+            // Each field will have a data-value assigned
+            var fieldValue = parseInt(rows[i].dataset.value) + j + 1;
+            var fieldID = "row" + i + "field" + j;
+
+            // Check which values are inside the
+            // BOMB VALUES and assign to the corrispective
+            // field the BOMB data-value
+            if(gameOverNumbers.includes(fieldValue)) {
+
+                rows[i].innerHTML += "<div class='field' id='" + fieldID + "' data-value='bomb'></div>";
+            } else {
+                rows[i].innerHTML += "<div class='field' id='" + fieldID + "' data-value='" + fieldValue + "'></div>";
+            }
+        }
+    }
+
+    return rows;
+ 
+}
+
+function funTest(rows, bombIcon) {
+    for (var i=0; i<rows.length; i++) {
+        for (var j=0; j<10; j++) {
+            var fieldID = "row" + i + "field" + j;
+            var field = document.getElementById(fieldID);
+            
+            // Check if the clicked field is a bomb
+            // In that case shows an alert (STILL WORKING ON GAME STOP)
+            // If is not a bomb, the field will change color
+            field.addEventListener("click", function() {
+                var fieldData = this.dataset.value;
+                if(fieldData == "bomb") {
+                    this.innerHTML = bombIcon;
+                    alert("BOOM");
+                } else {
+                    this.style.background = "blue";
+                }
+            });
+        }
+    }
+}
+
+
+
+function bonus() {
+
+    var radios = document.getElementsByName("level");
+    console.log(radios);
+    
+    var start = document.getElementById("start-game");
+
+    start.addEventListener("click", function() {
+
+        var level = levelSelected(radios);
+        var max = levelDifficulty(level);
+        var gameOverNumbers = [];
+        var bombIcon = "<i class=\"fas fa-bomb\"></i>";
+        var mineField = document.getElementById("minefield");
+        mineField.innerHTML = "";
+
+        generateGameOver(gameOverNumbers, max);
+
+        var rows = generateField(mineField, max, gameOverNumbers);
+
+        funTest(rows, bombIcon);
+    });
+
+    
+}
+        
+
+bonus();
 
 
