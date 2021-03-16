@@ -229,6 +229,7 @@ function isBoom(rows, bombIcon) {
 function gameOver(rows, bombIcon) {
     console.log("Inside game over");
     for (var i=0; i<rows.length; i++) {
+        rows[i].style.pointerEvents = "none";
         for (var j=0; j<10; j++) {
             var fieldID = "row" + i + "field" + j;
             var field = document.getElementById(fieldID);
