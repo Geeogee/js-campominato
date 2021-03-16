@@ -8,46 +8,46 @@ function generateRndNumb(min,max) {
 
 // Check if a values is already
 // inside a list of numbers
-function repsCheck(numberToCheck, numbers) {
+// function repsCheck(numberToCheck, numbers) {
 
-    // Annidate cycles version
-    // Check if the random number generated
-    // is already inside the array
-    // In that case, it generates a new number that will be checked
-    // When the number isn't a repetitions
-    // The function returns the number that will be pushed inside the array
+//     // Annidate cycles version
+//     // Check if the random number generated
+//     // is already inside the array
+//     // In that case, it generates a new number that will be checked
+//     // When the number isn't a repetitions
+//     // The function returns the number that will be pushed inside the array
 
-    // do {
-    //     for (var i=0; i<lng; i++) {
+//     // do {
+//     //     for (var i=0; i<lng; i++) {
 
-    //         var elem = gameOverNumbers[i];
-    //         if(numberToCheck == elem) {
+//     //         var elem = gameOverNumbers[i];
+//     //         if(numberToCheck == elem) {
                 
-    //             repFound = true;
-    //             numberToCheck = generateRndNumb(1,100);
-    //             break;
-    //         } else {
+//     //             repFound = true;
+//     //             numberToCheck = generateRndNumb(1,100);
+//     //             break;
+//     //         } else {
 
-    //             repFound = false; 
-    //         }
-    //     }
-    // } while(repFound)
+//     //             repFound = false; 
+//     //         }
+//     //     }
+//     // } while(repFound)
 
-    // One Cycle version
-    // Check if the number is a repetitions, and return true in that case
-    var repFound = false;
-    for (var i=0; i<numbers.length; i++) {
+//     // One Cycle version
+//     // Check if the number is a repetitions, and return true in that case
+//     var repFound = false;
+//     for (var i=0; i<numbers.length; i++) {
 
-        var elem = numbers[i];
-        if(elem == numberToCheck) {
+//         var elem = numbers[i];
+//         if(elem == numberToCheck) {
 
-            repFound = true;
-            break;
-        }
-    }
+//             repFound = true;
+//             break;
+//         }
+//     }
 
-    return repFound;
-}
+//     return repFound;
+// }
 
 
 // Game over Numbers 
@@ -55,7 +55,8 @@ function generateGameOver(gameOverNumbers, max) {
     while (gameOverNumbers.length < 16) {
 
         var rndNum = generateRndNumb(1,max);
-        var repsChecked = repsCheck(rndNum, gameOverNumbers);
+        // var repsChecked = repsCheck(rndNum, gameOverNumbers);
+        var repsChecked = gameOverNumbers.includes(rndNum);
         if(!repsChecked) {
 
             gameOverNumbers.push(rndNum);
@@ -65,15 +66,16 @@ function generateGameOver(gameOverNumbers, max) {
 
 //Player result 
 function playerScore(userHistory, boom, max, gameOverNumbers) {
-    while ((userHistory.length < (max - 16)) && (boom == false)) {
+    while ((userHistory.length < (max - 16)) && !boom) {
         
         var userNumber = parseInt(prompt("Insert a value from 1 to " + max + "!"));
-        var checkUserNumber = addUserNumber(userNumber, userHistory);
+        var checkUserNumber = userHistory.includes(userNumber);
 
-        if(checkUserNumber) {
+        if(!checkUserNumber) {
 
-            boom = repsCheck(userNumber, gameOverNumbers);
-            if(boom == false) {
+            // boom = repsCheck(userNumber, gameOverNumbers);
+            boom = gameOverNumbers.includes(userNumber);
+            if(!boom) {
 
                 userHistory.push(userNumber);
                 console.log("You're ok! Still no mine has exploded...yet.")
@@ -85,16 +87,6 @@ function playerScore(userHistory, boom, max, gameOverNumbers) {
     }
 
     return userHistory.length;
-}
-
-// User number function 
-function addUserNumber(userNumber, userHistory) {
-  
-    var checkHistory = repsCheck(userNumber,userHistory);
-    if (!checkHistory) {
-
-        return true;
-    } 
 }
 
 // Level
@@ -118,9 +110,6 @@ function levelDifficulty(level) {
             max = 80;
             break;
         case 2:
-            max = 60;
-            break;
-        case level > 2:
             max = 60;
             break;
         default:
@@ -155,5 +144,8 @@ function mineField() {
     console.log("Score: ", score)
 }
 
-// mineField();
+mineField();
+
+
+
 
