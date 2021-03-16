@@ -1,0 +1,36 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.container {
+    height: 100vh;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+
+#minefield {
+    background-color: red;
+}
+
+.row {
+    background-color: red;
+    border: 1px solid #000;
+    height: 40px;
+
+    display: flex;
+    flex-direction: row;
+}
+
+.field {
+    border: 1px solid #000;
+    width: 40px;
+    height: 40px;
+
+    line-height: 40px;
+    text-align: center;
+}

@@ -49,36 +49,9 @@ function repsCheck(numberToCheck, numbers) {
     return repFound;
 }
 
-// User number function 
-function addUserNumber(userNumber, userHistory) {
-  
-    var checkHistory = repsCheck(userNumber,userHistory);
-    if (!checkHistory) {
 
-        return true;
-    } 
-}
-
-// Level
-function levelDifficulty(level) {
-    if (level == 0) {
-        var max = 100;
-        return max;
-    } else if (level == 1) {
-        max = 80;
-        return max;
-    } else if (level == 2) {
-        max = 60;
-        return max;
-    }
-}
-
-// The game (you lost)
-function mineField() {
-    
-    var gameOverNumbers = [ ];
-    var level = parseInt(prompt("Choose the level difficulty. [0/1/2]"));
-    var max = levelDifficulty(level);
+// Game over Numbers 
+function generateGameOver(gameOverNumbers, max) {
     while (gameOverNumbers.length < 16) {
 
         var rndNum = generateRndNumb(1,max);
@@ -88,12 +61,11 @@ function mineField() {
             gameOverNumbers.push(rndNum);
         }
     }
+}
 
-    console.log(gameOverNumbers.length, gameOverNumbers);
-
-    var userHistory = [ ];
-    var boom = false;
-    while ((userHistory.length < 84) && (boom == false)) {
+//Player result 
+function playerScore(userHistory, boom, max, gameOverNumbers) {
+    while ((userHistory.length < (max - 16)) && (boom == false)) {
         
         var userNumber = parseInt(prompt("Insert a value from 1 to " + max + "!"));
         var checkUserNumber = addUserNumber(userNumber, userHistory);
@@ -111,9 +83,77 @@ function mineField() {
             console.log("You've already inserted this number!")
         }
     }
-    
-    console.log("BOOOOOM!");
-    console.log("Score: ", userHistory.length)
+
+    return userHistory.length;
 }
 
-mineField();
+// User number function 
+function addUserNumber(userNumber, userHistory) {
+  
+    var checkHistory = repsCheck(userNumber,userHistory);
+    if (!checkHistory) {
+
+        return true;
+    } 
+}
+
+// Level
+function levelDifficulty(level) {
+    // if (level == 0) {
+    //     var max = 100;
+    //     return max;
+    // } else if (level == 1) {
+    //     max = 80;
+    //     return max;
+    // } else if (level == 2) {
+    //     max = 60;
+    //     return max;
+    // }
+
+    switch(level) {
+        case 0:
+            var max = 100;
+            break;
+        case 1:
+            max = 80;
+            break;
+        case 2:
+            max = 60;
+            break;
+        case level > 2:
+            max = 60;
+            break;
+        default:
+            max = 100;
+            break;
+    }
+
+    return max;
+}
+
+// The game (you lost)
+function mineField() {
+    var gameOverNumbers = [ ];
+    var level = parseInt(prompt("Choose the level difficulty. [0/1/2]"));
+    var max = levelDifficulty(level);
+    generateGameOver(gameOverNumbers, max);
+    
+    console.log(gameOverNumbers.length, gameOverNumbers);
+    
+    var userHistory = [ ];
+    var boom = false;
+    var score = playerScore(userHistory, boom, max, gameOverNumbers);
+   
+    if (score < 84) {
+
+        console.log("BOOOOOM!");
+       
+    } else {
+
+        console.log("You win!")
+    }
+    console.log("Score: ", score)
+}
+
+// mineField();
+
