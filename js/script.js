@@ -203,7 +203,7 @@ function generateField(mineField,max, gameOverNumbers) {
  
 }
 
-function funTest(rows, bombIcon) {
+function isBoom(rows, bombIcon) {
     for (var i=0; i<rows.length; i++) {
         for (var j=0; j<10; j++) {
             var fieldID = "row" + i + "field" + j;
@@ -217,6 +217,7 @@ function funTest(rows, bombIcon) {
                 if(fieldData == "bomb") {
                     this.innerHTML = bombIcon;
                     alert("BOOM");
+                    gameOver(rows, bombIcon);
                 } else {
                     this.style.background = "blue";
                 }
@@ -225,6 +226,25 @@ function funTest(rows, bombIcon) {
     }
 }
 
+function gameOver(rows, bombIcon) {
+    console.log("Inside game over");
+    for (var i=0; i<rows.length; i++) {
+        for (var j=0; j<10; j++) {
+            var fieldID = "row" + i + "field" + j;
+            var field = document.getElementById(fieldID);
+            var fieldData = field.dataset.value;
+
+            if(fieldData == "bomb") {
+
+                field.innerHTML = bombIcon;
+            } else {
+
+                field.style.background = "blue";
+            }
+        }
+        
+    }
+}
 
 
 function bonus() {
@@ -247,7 +267,7 @@ function bonus() {
 
         var rows = generateField(mineField, max, gameOverNumbers);
 
-        funTest(rows, bombIcon);
+        isBoom(rows, bombIcon);
     });
 
     
