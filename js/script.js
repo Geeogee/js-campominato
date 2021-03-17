@@ -230,6 +230,7 @@ function isFieldBomb(rows, bombIcon, start, max, scoreField) {
                     gameOver(rows, bombIcon, score, winString);
                 } else {
 
+                    this.style.pointerEvents = "none";
                     this.style.backgroundColor = "rgb(192,192,192)";
                     this.style.border = "1px solid #818181";
                     score++;
